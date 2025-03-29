@@ -2,21 +2,25 @@ import { ILocationManager } from "./ILocationManager";
 import { Review } from "./Review";
 import { Location } from "./Location";
 
-export class LocationManager {
+export class LocationManager implements ILocationManager {
     
-    addReview(review: Review, location: Location): string {
-        return "";
+    public addReview(review: Review, location: Location): Review {
+        return review;
     }
 
-    deleteReview(review: Review, location:Location): string {
-        return "";
+    public deleteReview(review: Review, location:Location): Review {
+        return review;
     }
 
-    updateReview(review: Review, location:Location): string {
-        return "";
+    public updateReview(review: Review, location:Location): Review {
+        return review;
     }
 
-    listReviews(location: Location): Review[] {
+    public listReviews(location: Location): Review[] {
         return [];
+    }
+
+    public listLocations(): Location[] {
+        return []
     }
 }
