@@ -1,14 +1,16 @@
-import React from 'react';
-import Map from './components/Map';
+import  Map  from './components/Map'
+function App() {
 
-const App: React.FC = () => {
   return (
-    <div className="App">
-      <h1>Calm Corners</h1>
-      <h2>Locate study spaces that suit your needs!</h2>
+    <>
+      <div className="App">
+        <h1>Calm Corners</h1>
+        <h2>Locate study spaces that suit your needs!</h2>
       <Map />
-    </div>
-  );
+      </div>
+    </>
+    
+  )
 }
 
-export default App;
+export default App
