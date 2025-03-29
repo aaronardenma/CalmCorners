@@ -13,5 +13,5 @@ export class Location {
         this.numReviews = numReviews;
     }
 
-
+    
 }
