@@ -1,5 +1,3 @@
-// Mongo DB Schema
-
 import mongoose from "mongoose";
 
 const ReviewSchema = new mongoose.Schema({
@@ -7,7 +5,7 @@ const ReviewSchema = new mongoose.Schema({
     textReview: { type: String, required: true },
     noiseLevel: { type: Number, required: true, min: 1, max: 5 },
     busyLevel: { type: Number, required: true, min: 1, max: 5 },
-    location: { type: String, required: true },
+    location: { type: mongoose.Schema.Types.ObjectId, ref: "Location", required: true }, 
     weather: { type: String, enum: ["rainy", "cloudy", "sunny", "partly_cloudy", "snowy"], required: true },
     datetime: { type: Date, default: Date.now }
 });
