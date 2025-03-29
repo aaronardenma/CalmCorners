@@ -1,23 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Map from './components/Map';  // Import the Map component
+import Map from './components/Map';
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <div className="App">
-        <h1>React Application with Multiple Pages</h1>
-
-        <Switch>
-          <Route path="/map" component={Map} />  {/* Map Route */}
-          <Route path="/" exact>
-            <h2>Welcome to the homepage</h2>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div className="App">
+      <h1>Calm Corners</h1>
+      <h2>Locate study spaces that suit your needs!</h2>
+      <Map />
+    </div>
   );
 }
 
