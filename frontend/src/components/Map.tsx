@@ -73,7 +73,7 @@ const cafesRequest = {
   }, []);
   console.log(places);
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}>
+    <LoadScript googleMapsApiKey={import.meta.env.VITE_MAP_KEY || ''}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
