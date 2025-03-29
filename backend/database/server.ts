@@ -3,20 +3,32 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
+
 import reviewRoutes from "./routes/Reviews";
 
+dotenv.config({ path: "db.env" });
+
 const app = express();
+const PORT = process.env.PORT || 5000; // Default to 5000 if not specified
+const mongoURI = process.env.DB_URI as string;
 
 app.use(express.json()); // Parse JSON request body
 app.use(cors()); // Allow cross-origin requests
 
 // Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/quiet_space_finder")
-    .then(() => console.log("Connected to MongoDB"))
-    .catch(err => console.error("MongoDB connection error:", err));
+mongoose.connect(mongoURI)
+    .then(() => {
+        console.log("MongoDB connected successfully.");
+    })
+    .catch((error) => {
+        console.error("MongoDB connection error:", error);
+    });
 
-// Use review routes
-app.use("/api/reviews", reviewRoutes);
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.get("/", (req, res) => {
+        res.send("Quiet Space Finder API is running...");
+    });
+    
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
