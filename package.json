@@ -1,0 +1,15 @@
+{
+  "name": "calmcorners",
+  "version": "1.0.0",
+  "description": "BCS Hacks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "4.1"
+  }
+}
