@@ -42,12 +42,31 @@ export interface ILocationManager {
      * 
      * @return Review
      * 
-     * Should return the review if deleted successfully.
+     * Should return the updated review if updated successfully.
      * Throw an error if:
-     *      Review was not deleted successfully,
-     *      or the review does not exist
+     *      Review does not exist,
+     *      Location does not exist
+     *      Type errors occur with updateValues,
+     *      
      */
-    updateReview(review: Review, location: Location, updateValues: Record<string, any>): string;
+    updateReview(review: Review, location: Location, updateValues: Record<string, any>): Review;
 
+    /**
+     * 
+     * @param location  The Location to get Reviews from
+     * 
+     * 
+     * @return Review[]
+     * 
+     * Should return a list of reviews.
+     */
     listReviews(location: Location): Review[];
+
+    /**
+     * 
+     * @return Location[]
+     * 
+     * Should return a list of all Locations.
+     */
+    listLocations(): Location[];
 }
