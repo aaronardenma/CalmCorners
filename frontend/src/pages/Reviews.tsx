@@ -18,13 +18,13 @@ const Reviews = () => {
     const fetchLocations = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/locations"); // Direct GET request to fetch locations
-        if (!response.ok) throw new Error("Failed to fetch locations");
+        const response = await fetch("/mocklocations.json"); // Fetch local JSON file
+        if (!response.ok) throw new Error("Failed to fetch mock locations");
         const data = await response.json();
         setLocations(data);
         setError(null);
       } catch (err) {
-        console.error("Error fetching locations:", err);
+        console.error("Error fetching mock locations:", err);
         setError("Failed to load locations. Please try again later.");
       } finally {
         setIsLoading(false);
