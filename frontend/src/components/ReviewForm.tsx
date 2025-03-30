@@ -1,9 +1,6 @@
-
 import { useState } from "react";
 import { Location } from "../types";
 import { useNavigate } from "react-router-dom";
-import { addReview } from "../services/locationService";
-import { getCurrentUser, setNickname } from "../services/userService";
 
 interface ReviewFormProps {
   locations: Location[];
@@ -13,11 +10,9 @@ interface ReviewFormProps {
 const ReviewForm = ({ locations, preselectedLocationId }: ReviewFormProps) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const currentUser = getCurrentUser();
-  
   const [formData, setFormData] = useState({
     location: preselectedLocationId || "",
-    name: currentUser?.nickname || "",
+    name: "", // We're removing the automatic nickname fetch
     noiseLevel: 3,
     busyLevel: 3,
     textReview: "",
@@ -50,22 +45,34 @@ const ReviewForm = ({ locations, preselectedLocationId }: ReviewFormProps) => {
     setIsSubmitting(true);
     
     try {
-      // Save the nickname if it's different
-      if (!currentUser || currentUser.nickname !== formData.name) {
-        setNickname(formData.name);
+      // Optional: Update the user's nickname if necessary
+      if (formData.name) {
+        await fetch("/api/user/nickname", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ nickname: formData.name }),
+        });
       }
       
       // Submit the review
-      await addReview({
-        location: formData.location,
-        name: formData.name,
-        noiseLevel: Number(formData.noiseLevel),
-        busyLevel: Number(formData.busyLevel),
-        textReview: formData.textReview,
-        weather: formData.weather,
-        datetime: new Date().toISOString(),
+      await fetch("/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          location: formData.location,
+          name: formData.name,
+          noiseLevel: Number(formData.noiseLevel),
+          busyLevel: Number(formData.busyLevel),
+          textReview: formData.textReview,
+          weather: formData.weather,
+          datetime: new Date().toISOString(),
+        }),
       });
-      
+
       // Navigate to the location details page
       navigate(`/location/${formData.location}`);
     } catch (error) {
