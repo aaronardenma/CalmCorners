@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 // Get all reviews (GET /api/reviews)
 router.get("/", async (req, res) => {
     try {
-        const reviews = await Review.find().populate("location"); 
+        const reviews = await Review.find(); 
         res.json(reviews);
     } catch (error) {
         console.error(error);
