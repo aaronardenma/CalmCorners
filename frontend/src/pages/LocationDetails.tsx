@@ -22,7 +22,7 @@ const LocationDetails = () => {
   //     if (!response.ok) throw new Error("Failed to fetch mock locations");
   //     const data = await response.json();
   //     setLocations(data);
-  // }
+  // } test
 
   useEffect(() => {
     const fetchReviews = async () => {
