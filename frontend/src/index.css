@@ -1,2 +1,117 @@
-@import "tailwindcss";
-/* @import "tailwindcss/preflight" */
+@import "tailwindcss"
+
+/* @layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 40 40 48;
+
+    --card: 255 255 255;
+    --card-foreground: 40 40 48;
+
+    --popover: 255 255 255;
+    --popover-foreground: 40 40 48;
+
+    --primary: 255 112 255;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 229 222 255;
+    --secondary-foreground: 40 40 48;
+
+    --muted: 245 245 250;
+    --muted-foreground: 115 115 128;
+
+    --accent: 211 228 253;
+    --accent-foreground: 40 40 48;
+
+    --destructive: 255 80 80;
+    --destructive-foreground: 255 255 255;
+
+    --border: 230 230 240;
+    --input: 230 230 240;
+    --ring: 155 135 245;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 20 20 28;
+    --foreground: 230 230 240;
+
+    --card: 30 30 38;
+    --card-foreground: 230 230 240;
+
+    --popover: 30 30 38;
+    --popover-foreground: 230 230 240;
+
+    --primary: 155 135 245;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 74 61 115;
+    --secondary-foreground: 255 255 255;
+
+    --muted: 40 40 48;
+    --muted-foreground: 180 180 190;
+
+    --accent: 74 61 115;
+    --accent-foreground: 255 255 255;
+
+    --destructive: 255 80 80;
+    --destructive-foreground: 255 255 255;
+
+    --border: 40 40 48;
+    --input: 40 40 48;
+    --ring: 155 135 245;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.mapboxgl-map {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.pulse {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(155, 135, 245, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(155, 135, 245, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(155, 135, 245, 0);
+  }
+} */

@@ -64,6 +64,12 @@ export interface ILocationManager {
 
     /**
      * 
+     * 
+     */
+    fetchLocations(): void;
+
+    /**
+     * 
      * @return Location[]
      * 
      * Should return a list of all Locations.
