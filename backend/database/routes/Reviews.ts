@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 const router = express.Router();
 
 // Save (POST) a new review
-router.post("/", 
+router.post("/reviewform", 
     [
         body('name').notEmpty().withMessage('Name is required'),
         body('textReview').notEmpty().withMessage('Review text is required'),
