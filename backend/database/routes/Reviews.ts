@@ -56,23 +56,34 @@ router.get("/", async (req, res) => {
 });
 
 // Update (PATCH) a review (PATCH /api/reviews/:id)
-router.patch("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
+
     const { id } = req.params;  // Get the review ID from the URL
     const { name, textReview, noiseLevel, busyLevel, location, weather, datetime } = req.body;
 
     try {
-        // Find the review by ID and update it with the new data
-        const updatedReview = await Review.findByIdAndUpdate(
-            id, 
-            { name, textReview, noiseLevel, busyLevel, location, weather, datetime },
-            { new: true }  // The "new" option returns the updated review instead of the original
-        );
-
-        if (!updatedReview) {
+        // Find the review by ID
+        const review = await Review.findById(id);
+        if (!review) {
             return res.status(404).json({ message: "Review not found" });
         }
 
-        res.status(200).json({ message: "Review updated successfully", review: updatedReview });
+        // Check if the user (by name) is the same as the review's creator
+        if (review.name !== name) {
+            return res.status(403).json({ message: "You are not authorized to update this review" });
+        }
+
+        // Proceed with updating the review if the name matches
+        review.textReview = textReview || review.textReview;
+        review.noiseLevel = noiseLevel || review.noiseLevel;
+        review.busyLevel = busyLevel || review.busyLevel;
+        review.location = location || review.location;
+        review.weather = weather || review.weather;
+        review.datetime = datetime || review.datetime;
+
+        await review.save();  // Save the updated review
+
+        res.status(200).json({ message: "Review updated successfully", review });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to update review" });
@@ -81,7 +92,9 @@ router.patch("/:id", async (req, res) => {
 
 // DELETE a review by ID (DELETE /api/reviews/:id)
 router.delete("/:id", async (req, res) => {
+    
     const { id } = req.params;  // Get the review ID from the URL params
+    const { name } = req.body;  // Get the name from the request body (since we're assuming name is the user ID)
 
     // Validate the ID format
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -89,12 +102,19 @@ router.delete("/:id", async (req, res) => {
     }
 
     try {
-        // Attempt to find and delete the review by ID
-        const deletedReview = await Review.findByIdAndDelete(id);
-
-        if (!deletedReview) {
+        // Find the review by ID
+        const review = await Review.findById(id);
+        if (!review) {
             return res.status(404).json({ message: "Review not found" });
         }
+
+        // Check if the user (by name) is the same as the review's creator
+        if (review.name !== name) {
+            return res.status(403).json({ message: "You are not authorized to delete this review" });
+        }
+
+        // Proceed to delete the review if the name matches
+        const deletedReview = await Review.findByIdAndDelete(id);
 
         res.status(200).json({ message: "Review deleted successfully", review: deletedReview });
     } catch (error) {
