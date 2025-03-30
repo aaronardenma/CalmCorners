@@ -1,92 +1,155 @@
-// frontend/src/components/Map.tsx
 import React, { useEffect, useRef, useState } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, useJsApiLoader } from '@react-google-maps/api';
 
-// Type for places returned from the Places API
-interface Place {
-  name: string;
-  location: { lat: number; lng: number };
-}
-
-// Set map container styles and initial center coordinates
 const containerStyle = {
-  width: '100%',
-  height: '500px',
+  width: '80vw',
+  height: '80vh',
 };
 
 const center = {
-  lat: 49.266757915974424, // Latitude 
-  lng: -123.25493253691926, // Longitude
+  lat: 49.266757915974424, lng: -123.25493253691926
 };
 
-const Map: React.FC = () => {
-  const [places, setPlaces] = useState<Place[]>([]);
-  const mapRef = useRef<any>(null);
-  const fetchPlaces = () => {
-    if (mapRef.current) {
-      const google = window.google;
+async function nearbySearch(map: any) {
+    //@ts-ignore
+    const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-      const map = mapRef.current;
-      const service = new google.maps.places.PlacesService(map);
+    // Restrict within the map viewport.
+    //let center = new google.maps.LatLng(52.369358, 4.889258);
 
-const cafesRequest = {
-      location: center,
-      radius: 1500,
-      type: 'restaurant',  // Searching only for cafes
+    const request = {
+        // required parameters
+        fields: ['displayName', 'location', 'businessStatus'],
+        locationRestriction: {
+            center: center,
+            radius: 500, 
+        },
+        // optional parameters
+        //includedPrimaryTypes: ['restaurant'],
+        //maxResultCount: 5,
+        rankPreference: SearchNearbyRankPreference.POPULARITY,
+        language: 'en-US',
+        region: 'us',
     };
 
-    // Define the search request for libraries
-    const librariesRequest = {
-      location: center,
-      radius: 1500,
-      //type: 'library',  // Searching only for libraries
-    };
+    //@ts-ignore
+    const { places } = await Place.searchNearby(request);
 
-    // Perform the search for cafes
-    service.nearbySearch(cafesRequest, (results, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-        const placesData = results.map((place: any) => ({
-          name: place.name,
-          location: place.geometry.location.toJSON(),
-          type: 'cafe', // Mark the place type as 'cafe'
-        }));
-        setPlaces((prevPlaces) => [...prevPlaces, ...placesData]);
-      }
-    });
+    if (places.length) {
+        console.log(places);
 
-    // Perform the search for libraries
-    service.nearbySearch(librariesRequest, (results, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-        const placesData = results.map((place: any) => ({
-          name: place.name,
-          location: place.geometry.location.toJSON(),
-          type: 'library', // Mark the place type as 'library'
-        }));
-        setPlaces((prevPlaces) => [...prevPlaces, ...placesData]);
-      }
+        const { LatLngBounds } = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
+        const bounds = new LatLngBounds();
+
+        // Loop through and get all the results.
+        places.forEach((place) => {
+          const col = chooseColour();
+          let noise;
+          if (col == '#4CAF50') {
+            noise = "Quiet";
+          } else if (col == '#FFC107') {
+            noise = "Moderate noise";
+          } else {
+            noise = "Noisy";
+          }
+            const markerView = new google.maps.Marker({
+                map,
+                position: place.location,
+                title: place.displayName,
+                icon: {
+                  path: window.google.maps.SymbolPath.CIRCLE,
+                  fillColor: col,
+                  fillOpacity: 0.6,
+                  strokeWeight: 1,
+                  strokeColor: '#ffffff',
+                  scale: 10,
+      },
+            });
+    // Add an info window for additional details
+    const infoWindow = new google.maps.InfoWindow({
+      content: `
+        <div style='color: black;'>
+          <h5>${place.displayName}</h5>
+          <p>Noise Level: ${noise}</p>
+        </div>
+      `,
     });
+            markerView.addListener('click', () => {
+                  infoWindow.open({
+      anchor: markerView,
+      map,
+    });
+            });
+            bounds.extend(place.location as google.maps.LatLng);
+            console.log(place);
+        });
+
+        map.fitBounds(bounds);
+
+    } else {
+        console.log("No results");
     }
+}
+
+const Map: React.FC = () => {
+  const mapRef = useRef<google.maps.Map | null>(null); // Reference to map object
+  const [isMapLoaded, setIsMapLoaded] = useState(false); // State to track if map is loaded
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyCscwVhEPKGgJEtkCPZdisklrUaom9hPw8", // Your API Key
+  });
+
+  // Wait for the map to load
+  const onMapLoad = (map: google.maps.Map) => {
+    mapRef.current = map;  // Set the map reference once map is loaded
+    setIsMapLoaded(true);   // Set state to indicate map is loaded
   };
 
   useEffect(() => {
-    fetchPlaces();
-  }, []);
-  console.log(places);
+    if (isMapLoaded && mapRef.current) {
+      const map = mapRef.current;
+
+      // Create a marker only after the map is loaded
+      const marker = new google.maps.Marker({
+        position: center,  // Position of the marker
+        map: map,          // Attach the marker to the map
+        title: 'Center Marker',  // Optional title for the marker
+      });
+
+      // Optionally, you can add event listeners to the marker
+      marker.addListener('click', () => {
+        alert('Marker clicked!');
+      });
+
+      nearbySearch(map);
+    }
+  }, [isMapLoaded]);  // This effect runs once when map is loaded
+
   return (
-    <LoadScript googleMapsApiKey={import.meta.env.VITE_MAP_KEY || ''}>
+    <LoadScript googleMapsApiKey="AIzaSyCscwVhEPKGgJEtkCPZdisklrUaom9hPw8">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
         zoom={17}
-        onLoad={(map) => { mapRef.current = map; }}
-      >
-        {/* Add markers for each place */}
-        {places.map((place, index) => (
-          <Marker key={index} position={place.location} label={place.name} />
-        ))}
-      </GoogleMap>
+        onLoad={onMapLoad}  // Set map reference when map is loaded
+      />
     </LoadScript>
   );
 };
 
+function chooseColour() {
+  const num = getRandomInt(3);
+  if (num === 1) {
+    return '#4CAF50';
+  } else if (num === 2) {
+    return '#FFC107';
+  } else {
+    return '#F44336';
+  }
+}
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
 export default Map;
