@@ -1,0 +1,247 @@
+[{
+    "_id": "1",
+    "name": "Irving K. Barber Learning Centre",
+    "description": "A large library with multiple floors of quiet study spaces.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.2526,
+        49.268
+      ]
+    },
+    "address": "1961 East Mall, Vancouver, BC V6T 1Z1",
+    "category": "library",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets",
+      "study rooms"
+    ],
+    "averageQuietness": 4.5,
+    "reviews": [],
+    "imageUrl": "https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=1000",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "2",
+    "name": "Koerner Library",
+    "description": "Quiet library with individual study carrels and group study rooms.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.2555,
+        49.2694
+      ]
+    },
+    "address": "1958 Main Mall, Vancouver, BC V6T 1Z2",
+    "category": "library",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets",
+      "study rooms",
+      "computers"
+    ],
+    "averageQuietness": 4.8,
+    "reviews": [],
+    "imageUrl": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1000",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "3",
+    "name": "Nitobe Memorial Garden",
+    "description": "A traditional Japanese garden perfect for quiet reflection.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.2595,
+        49.2677
+      ]
+    },
+    "address": "1895 Lower Mall, Vancouver, BC V6T 1Z4",
+    "category": "garden",
+    "amenities": [
+      "benches",
+      "nature",
+      "water features"
+    ],
+    "averageQuietness": 4.9,
+    "reviews": [],
+    "imageUrl": "https://botanicalgarden.ubc.ca/files/2022/05/kristinagamboa-Instagram-3204-ig-18061943284075910.jpg",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "4",
+    "name": "The Nest - Upper Floors",
+    "description": "Upper floors of the student union building with study spaces.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.249,
+        49.2665
+      ]
+    },
+    "address": "6133 University Blvd, Vancouver, BC V6T 1Z1",
+    "category": "study room",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets",
+      "food nearby"
+    ],
+    "averageQuietness": 3.2,
+    "reviews": [],
+    "imageUrl": "https://i.imgur.com/bQnG7QN.jpeg",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "5",
+    "name": "Woodward Library",
+    "description": "A more specialized library with quiet study spaces.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.2468,
+        49.2641
+      ]
+    },
+    "address": "2198 Health Sciences Mall, Vancouver, BC V6T 1Z3",
+    "category": "library",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets"
+    ],
+    "averageQuietness": 4.6,
+    "reviews": [],
+    "imageUrl": "https://i.imgur.com/HO6skSm.jpeg",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "6",
+    "name": "Buchanan Building - Courtyards",
+    "description": "Peaceful courtyards within the Buchanan building complex.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.254,
+        49.2691
+      ]
+    },
+    "address": "1866 Main Mall, Vancouver, BC V6T 1Z1",
+    "category": "outdoor space",
+    "amenities": [
+      "benches",
+      "nature"
+    ],
+    "averageQuietness": 3.9,
+    "reviews": [],
+    "imageUrl": "https://i.imgur.com/A7wrD2K.jpeg",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "7",
+    "name": "Forestry Building",
+    "description": "A quiet building with spaces for studying and environmental research.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.252,
+        49.2618
+      ]
+    },
+    "address": "2424 Main Mall, Vancouver, BC V6T 1Z4",
+    "category": "study room",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets",
+      "study rooms"
+    ],
+    "averageQuietness": 4.3,
+    "reviews": [],
+    "imageUrl": "https://i.imgur.com/hesqaEP.jpeg",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "8",
+    "name": "Life Building",
+    "description": "A building dedicated to the study of life sciences with ample study areas.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.2514,
+        49.2682
+      ]
+    },
+    "address": "2350 Health Sciences Mall, Vancouver, BC V6T 1Z3",
+    "category": "study room",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets",
+      "study rooms"
+    ],
+    "averageQuietness": 4.4,
+    "reviews": [],
+    "imageUrl": "https://i.imgur.com/oyYPUXI.jpeg",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "9",
+    "name": "Arts Student Centre UBC",
+    "description": "A vibrant space for arts students with study areas and community gathering spaces.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.2455,
+        49.2606
+      ]
+    },
+    "address": "6356 University Blvd, Vancouver, BC V6T 1Z2",
+    "category": "study room",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets",
+      "food nearby"
+    ],
+    "averageQuietness": 3.8,
+    "reviews": [],
+    "imageUrl": "https://i.imgur.com/TnLJLnu.jpeg0",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  },
+  {
+    "_id": "10",
+    "name": "Asian Centre",
+    "description": "A quiet and culturally enriched space offering study areas and cultural events.",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -123.2537,
+        49.2654
+      ]
+    },
+    "address": "1871 West Mall, Vancouver, BC V6T 1Z2",
+    "category": "study room",
+    "amenities": [
+      "wifi",
+      "desks",
+      "power outlets",
+      "study rooms"
+    ],
+    "averageQuietness": 4.7,
+    "reviews": [],
+    "imageUrl": "https://i.imgur.com/1JN7ADC.jpeg",
+    "createdAt": "2025-03-29T00:00:00.000Z",
+    "updatedAt": "2025-03-29T00:00:00.000Z"
+  }]

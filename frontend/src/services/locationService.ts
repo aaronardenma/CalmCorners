@@ -41,7 +41,7 @@ const MOCK_LOCATIONS: Location[] = [
     numReviews: 1,
     category: 'garden',
     amenities: ['benches', 'nature', 'water features'],
-    imageUrl: 'https://images.unsplash.com/photo-1614128569361-0873767775e0?q=80&w=1000',
+    imageUrl: 'https://i.imgur.com/bQnG7QN.jpeg',
   },
   {
     _id: '4',
