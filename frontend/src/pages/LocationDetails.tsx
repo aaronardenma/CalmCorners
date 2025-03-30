@@ -180,9 +180,7 @@ const LocationDetails = () => {
           </div>
           
           <div className="max-w-3xl mx-auto space-y-8">
-            <div className="bg-white rounded-lg border p-6">
-              {renderLocationDetails()}
-            </div>
+            <img src="https://i.imgur.com/bQnG7QN.jpeg"></img>
             
             <div className="bg-white rounded-lg border p-6">
               <h2 className="text-xl font-bold mb-4">Reviews</h2>

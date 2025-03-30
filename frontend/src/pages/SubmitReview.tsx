@@ -235,7 +235,7 @@ const SubmitReview = () => {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="bg-quiet-400 hover:bg-quiet-500 text-white px-4 py-2 rounded w-full font-medium"
+                  className="bg-quiet-400 hover:bg-quiet-500  px-4 py-2 rounded w-full font-medium"
                 >
                   {isSubmitting ? "Submitting..." : "Submit Review"}
                 </button>
