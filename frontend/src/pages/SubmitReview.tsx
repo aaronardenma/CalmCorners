@@ -72,7 +72,7 @@ const SubmitReview = () => {
     
     try {
       // Directly send the review data to the backend (POST request)
-      const response = await axios.post("http://localhost:5174/reviews", {
+      const response = await axios.post("http://localhost:5174/reviewform", {
         location: formData.location,
         name: formData.name,
         noiseLevel: Number(formData.noiseLevel),
