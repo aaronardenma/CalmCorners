@@ -1,5 +1,7 @@
-[
-  {
+[{
+    "_id": {
+      "$oid": "67e8863d6fb297c8288d6bcd"
+    },
     "name": "John Doe",
     "textReview": "Great place for quiet study. The atmosphere is calm, and the study spaces are clean and well-lit. I visit here often to focus on my assignments.",
     "noiseLevel": 2,
@@ -9,6 +11,9 @@
     "datetime": "2025-03-29T09:30:00.000Z"
   },
   {
+    "_id": {
+      "$oid": "67e8863d6fb297c8288d6bce"
+    },
     "name": "Sarah Lee",
     "textReview": "This place gets a bit crowded during the afternoons, but it’s a good spot overall. The noise level is manageable, though I prefer it quieter. A solid place for studying if you're not too distracted.",
     "noiseLevel": 3,
@@ -18,6 +23,9 @@
     "datetime": "2025-03-28T14:00:00.000Z"
   },
   {
+    "_id": {
+      "$oid": "67e8863d6fb297c8288d6bcf"
+    },
     "name": "Alex Smith",
     "textReview": "Perfect for focused study sessions. The noise is minimal, and the lighting is excellent. I love studying here when the weather is nice. It’s never too busy either, so I can always find a spot.",
     "noiseLevel": 1,
@@ -25,5 +33,19 @@
     "location": "Nitobe Memorial Garden",
     "weather": "partly_cloudy",
     "datetime": "2025-03-27T11:15:00.000Z"
-  }
-]
+  },
+  {
+    "_id": {
+      "$oid": "67e896a6744812b7751bb1d8"
+    },
+    "name": "Jay Gee",
+    "textReview": "A chill place to study",
+    "noiseLevel": 1,
+    "busyLevel": 3,
+    "location": "Asian Centre",
+    "weather": "partly_cloudy",
+    "datetime": {
+      "$date": "2025-03-11T22:22:00.000Z"
+    },
+    "__v": 0
+  }]
