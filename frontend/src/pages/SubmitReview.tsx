@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getLocations, addReview } from "../services/locationService";
+import axios from "axios"; // Import axios to make HTTP requests
 import { Location } from "../types";
 import Header from "../components/Header";
 import { ArrowLeft } from "lucide-react";
@@ -27,12 +26,13 @@ const SubmitReview = () => {
 
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
+  // Fetch locations directly from your backend
   useEffect(() => {
     const fetchLocations = async () => {
       try {
         setIsLoading(true);
-        const data = await getLocations();
-        setLocations(data);
+        const response = await axios.get("http://localhost:5174/locations"); // Replace with your backend URL
+        setLocations(response.data);
         setError(null);
       } catch (err) {
         console.error("Error fetching locations:", err);
@@ -45,6 +45,7 @@ const SubmitReview = () => {
     fetchLocations();
   }, []);
 
+  // Validate the form data
   const validateForm = () => {
     const errors: Record<string, string> = {};
     
@@ -61,6 +62,7 @@ const SubmitReview = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Directly submit review to the backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -69,8 +71,8 @@ const SubmitReview = () => {
     setIsSubmitting(true);
     
     try {
-      // Submit the review
-      await addReview({
+      // Directly send the review data to the backend (POST request)
+      const response = await axios.post("http://localhost:5174/reviews", {
         location: formData.location,
         name: formData.name,
         noiseLevel: Number(formData.noiseLevel),
@@ -80,10 +82,12 @@ const SubmitReview = () => {
         datetime: new Date().toISOString(),
       });
       
-      // Navigate to the location details page
-      navigate(`/location/${formData.location}`);
+      if (response.status === 201) {
+        // Review successfully submitted, navigate to location details page
+        navigate(`/location/${formData.location}`);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error submitting review:", error);
       setError("Failed to submit review. Please try again.");
     } finally {
       setIsSubmitting(false);

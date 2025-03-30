@@ -1,7 +1,5 @@
-
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { getLocations } from "../services/locationService";
 import { Location } from "../types";
 import Header from "../components/Header";
 import ReviewForm from "../components/ReviewForm";
@@ -20,7 +18,9 @@ const Reviews = () => {
     const fetchLocations = async () => {
       try {
         setIsLoading(true);
-        const data = await getLocations();
+        const response = await fetch("/api/locations"); // Direct GET request to fetch locations
+        if (!response.ok) throw new Error("Failed to fetch locations");
+        const data = await response.json();
         setLocations(data);
         setError(null);
       } catch (err) {
