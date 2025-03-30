@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { GoogleMap, LoadScript, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '80vw',
@@ -10,13 +10,11 @@ const center = {
   lat: 49.266757915974424, lng: -123.25493253691926
 };
 
+const key = import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY;
+
 async function nearbySearch(map: any) {
     //@ts-ignore
     const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
-
-    // Restrict within the map viewport.
-    //let center = new google.maps.LatLng(52.369358, 4.889258);
 
     const request = {
         // required parameters
@@ -26,8 +24,6 @@ async function nearbySearch(map: any) {
             radius: 500, 
         },
         // optional parameters
-        //includedPrimaryTypes: ['restaurant'],
-        //maxResultCount: 5,
         rankPreference: SearchNearbyRankPreference.POPULARITY,
         language: 'en-US',
         region: 'us',
@@ -101,9 +97,9 @@ const Map: React.FC = () => {
   const mapRef = useRef<google.maps.Map | null>(null); // Reference to map object
   const [isMapLoaded, setIsMapLoaded] = useState(false); // State to track if map is loaded
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyCscwVhEPKGgJEtkCPZdisklrUaom9hPw8", // Your API Key
-  });
+  // const { isLoaded } = useJsApiLoader({
+  //   googleMapsApiKey: key, // Your API Key
+  // });
 
   // Wait for the map to load
   const onMapLoad = (map: google.maps.Map) => {
@@ -132,7 +128,7 @@ const Map: React.FC = () => {
   }, [isMapLoaded]);  // This effect runs once when map is loaded
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyCscwVhEPKGgJEtkCPZdisklrUaom9hPw8">
+    <LoadScript googleMapsApiKey={key}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
