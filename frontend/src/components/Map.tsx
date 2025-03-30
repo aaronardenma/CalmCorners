@@ -46,12 +46,16 @@ async function nearbySearch(map: any) {
         places.forEach((place) => {
           const col = chooseColour();
           let noise;
+          let busy;
           if (col == '#4CAF50') {
             noise = "Quiet";
+            busy = "Not busy - lots of space";
           } else if (col == '#FFC107') {
             noise = "Moderate noise";
+            busy = "Somewhat busy";
           } else {
             noise = "Noisy";
+            busy = "Very busy - no more open spots";
           }
             const markerView = new google.maps.Marker({
                 map,
@@ -70,8 +74,9 @@ async function nearbySearch(map: any) {
     const infoWindow = new google.maps.InfoWindow({
       content: `
         <div style='color: black;'>
-          <h5>${place.displayName}</h5>
+          <h2>${place.displayName}</h2>
           <p>Noise Level: ${noise}</p>
+          <p>${busy}</p>
         </div>
       `,
     });
