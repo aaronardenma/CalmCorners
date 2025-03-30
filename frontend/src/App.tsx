@@ -1,15 +1,18 @@
-import  Map  from './components/Map'
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import SubmitReview from './pages/SubmitReview'
+import Home from './pages/Home.tsx'
+import NavBar from './components/NavBar.tsx'
+
 function App() {
 
   return (
-    <>
-      <div className="App">
-        <h1>Calm Corners</h1>
-        <h2>Locate study spaces that suit your needs!</h2>
-      <Map />
-      </div>
-    </>
-    
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/review" element={<SubmitReview />}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
