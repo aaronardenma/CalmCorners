@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState, memo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 //import { Location } from '@/types';
-import LocationMarker from './LocationMarker';
-import { toast } from 'sonner';
-import MapFilterBar, { FilterOptions } from './MapFilterBar';
+// import LocationMarker from './LocationMarker';
+// import { toast } from 'sonner';
+// import MapFilterBar, { FilterOptions } from './MapFilterBar';
 
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
-interface MapViewProps {
-  locations: Location[];
-}
+// interface MapViewProps {
+//   locations: Location[];
+// }
 
 // Separate this as a constant outside the component to avoid re-creation
 const containerStyle = {
@@ -18,8 +18,7 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 49.2606,
-  lng: -123.2460
+   lat: 49.266757915974424, lng: -123.25493253691926
 };
 
 const key = import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -42,10 +41,7 @@ async function searchPlaces(text: Array<string>, map: any) {
   return place;
 
   })
-
   const places = await Promise.all(resp);
-  console.log("PLACES: ", places.length);
-
       if (places.length) {
         console.log(places);
 
@@ -54,14 +50,12 @@ async function searchPlaces(text: Array<string>, map: any) {
 
         // Loop through and get all the results.
         places.forEach((place: any) => {
-          console.log("Choosing colours...");
           const loc = place.places[0].Eg.location;
           const dispName = place.places[0].Eg.displayName;
-          console.log("location: ", loc);
-          console.log("Display name: ", dispName);
-          const col = chooseColour();
+          const col = getReviewsColour(place);
           let noise;
           let busy;
+          let min = getRandomInt(60);
           if (col == '#4CAF50') {
             noise = "Quiet";
             busy = "Not busy - lots of space";
@@ -79,19 +73,20 @@ async function searchPlaces(text: Array<string>, map: any) {
                 icon: {
                   path: window.google.maps.SymbolPath.CIRCLE,
                   fillColor: col, 
-                  fillOpacity: 0.6,
-                  strokeWeight: 1,
+                  fillOpacity: 0.8,
+                  strokeWeight: 1.5,
                   strokeColor: '#ffffff',
-                  scale: 10,
+                  scale: 12,
       },
             });
     // Add an info window for additional details
     const infoWindow = new google.maps.InfoWindow({
       content: `
         <div style='color: black;'>
-          <h2>${dispName}</h2>
+          <h2 style='font-weight: bold;'>${dispName}</h2>
           <p>Noise Level: ${noise}</p>
           <p>${busy}</p>
+          <p>Last updated: ${min} minutes ago</p>
         </div>
       `,
     });
@@ -145,6 +140,7 @@ async function nearbySearch(map: any) {
           const col = chooseColour();
           let noise;
           let busy;
+          let min = getRandomInt(60);
           if (col == '#4CAF50') {
             noise = "Quiet";
             busy = "Not busy - lots of space";
@@ -175,6 +171,7 @@ async function nearbySearch(map: any) {
           <h2>${place.displayName}</h2>
           <p>Noise Level: ${noise}</p>
           <p>${busy}</p>
+          <p>Last updated: ${min} minutes ago</p>
         </div>
       `,
     });
@@ -473,7 +470,7 @@ const MapView: React.FC = () => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={17}
+        zoom={15}
         onLoad={onMapLoad}  // Set map reference when map is loaded
       />
     </LoadScript>
@@ -496,7 +493,9 @@ function getRandomInt(max: number) {
 }
 
 function getReviewsColour(place: any) {
-
+  // get request from mongoDB 
+  // get reviews and avg ranking
+  return chooseColour();
 }
 
 export default MapView;
