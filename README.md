@@ -1,2 +1,20 @@
-# CalmCorners
-BCS Hacks
+## Inspiration
+Campus life can be overwhelming for many students. Whether it's the business of libraries during exam season or the noisiness of student hot spots, finding the perfect place to study can be challenging. Inspired by the need for finding more accessible, inclusive, and serene spaces, we created CalmCorners. Our goal was to build a platform that empowers students, particularly those who are neurodivergent or may be sensitive to sensory overload, to easily locate quiet, sensory-friendly spaces for their studying needs. 
+
+## What it does
+CalmCorners transforms how students discover and choose study spaces by providing a dynamic, user-driven platform that gathers real-time feedback on campus locations. Our app allows users to submit reviews of the places they are currently studying at, rating them based on factors like noisiness, busyness, and even weather conditions, while also leaving general comments for others. This empowers students to make informed decisions about where to study, ensuring they find the perfect environment to focus. In addition, the map integrates a live Google Maps API, displaying recent reviews as interactive pins on the map. This visual tool makes it easy for students to quickly identify the best spots to study at a glance, allowing for a more efficient and peaceful study experience for all.
+
+## How we built it
+To bring CalmCorners to life, we leveraged the **MERN stack** —MongoDB, Express, React, and Node.js— for a robust, scalable, and efficient web application. We use MongoDB to store user reviews and location data. To make this data actionable, we integrated the Google Maps API, so we can dynamically pin user reviews to specific campus locations, giving users a real-time, interactive view of study spots. The web app's intuitive interface, built with React, enables users to quickly explore available study locations and their current status. Express and Node.js handle the server-side functionality, ensuring efficient data retrieval and smooth performance. Together, this technology stack helps us create a fast, reliable, and interactive experience for students.
+
+## Challenges we ran into
+One of our biggest challenges was understanding what we needed to do for successful integration between frontend and backend. This also included difficulties branching and merging each others work with one another, which often lead to things breaking from time to time. The time crunch was also a major challenge for us towards the end of the hackathon when we were putting it all together!
+
+## Accomplishments that we're proud of
+For some of our members, this project marked their first experience building a full web stack application, which was both challenging and rewarding; many of us were working with these technologies for the first time or were practicing our skills with technologies they were not comfortable with. One of our biggest accomplishments was integrating the Google Maps API with our MongoDB database; this seamless combination of real-time data with an interactive map has been a crucial feature of the app, and we’re thrilled with how it turned out.
+
+## What we learned
+We learned a lot about teamwork and coordination, especially when it came to allocating specific tasks to those who fit them best but also challenging ourselves to try new things we have never done before (or were largely unfamiliar with). Having to constantly change what we wanted to do with the project in order to meet the deadline also improved our quick-thinking and overall adaptability.
+
+## What's next for CalmCorners
+Next, we plan to enhance CalmCorners with User Profile Creation and Authentication, allowing users to personalize their experience and save their favorite spots. We're also excited to expand our locations beyond UBC, allowing the tracking of locations like cafes, libraries, and parks to provide more peaceful study options. Additionally, we'll be working on a mobile-friendly setup to make it easier for users to find their ideal study spots on the go, whether on campus or in the community. These updates will help make CalmCorners even more accessible and useful for students everywhere.
