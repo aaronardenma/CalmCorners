@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getLocationById, getReviewsForLocation } from "../services/locationService";
 import { Location, Review } from "../types";
 import Header from "../components/Header";
 import QuietnessMeter from "../components/QuietnessMeter";
 import { MapPin, ArrowLeft } from "lucide-react";
 import { Skeleton } from "../components/ui/skeleton";
+import axios from 'axios'
 
 const LocationDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,26 +15,23 @@ const LocationDetails = () => {
   const [locationError, setLocationError] = useState<string | null>(null);
   const [isLoadingReviews, setIsLoadingReviews] = useState(true);
   const [reviewsError, setReviewsError] = useState<string | null>(null);
+  // const [locations, setLocations] = useState('');
+
+  // const getImage = async () => {
+  //   const response = await fetch("/mocklocations.json"); // Fetch local JSON file
+  //     if (!response.ok) throw new Error("Failed to fetch mock locations");
+  //     const data = await response.json();
+  //     setLocations(data);
+  // }
 
   useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        setIsLoadingLocation(true);
-        const fetchedLocation = await getLocationById(id!);
-        setLocation(fetchedLocation);
-        setLocationError(null);
-      } catch (err) {
-        console.error("Error fetching location:", err);
-        setLocationError("Failed to load location. Please try again later.");
-      } finally {
-        setIsLoadingLocation(false);
-      }
-    };
-
     const fetchReviews = async () => {
+
       try {
         setIsLoadingReviews(true);
-        const fetchedReviews = await getReviewsForLocation(id!);
+        const response = await axios.get("http://localhost:3421/api/reviews")
+        // const response = await fetch(`/api/reviews?locationId=${id}`);
+        const fetchedReviews = await response.data;
         setReviews(fetchedReviews);
         setReviewsError(null);
       } catch (err) {
@@ -44,8 +41,6 @@ const LocationDetails = () => {
         setIsLoadingReviews(false);
       }
     };
-
-    fetchLocation();
     fetchReviews();
   }, [id]);
 
@@ -109,10 +104,6 @@ const LocationDetails = () => {
           </div>
         </div>
         
-        {location.imageUrl && (
-          <img src={location.imageUrl} alt={location.name} className="rounded-lg shadow-md" />
-        )}
-        
         <Link to={`/reviews?locationId=${location._id}`} className="inline-block bg-quiet-400 hover:bg-quiet-500 text-white font-semibold py-2 px-4 rounded-md transition-colors">
           Share Your Experience
         </Link>
@@ -120,7 +111,6 @@ const LocationDetails = () => {
     );
   };
 
-  // Update the review rendering section to match our schema
   const renderReviews = () => {
     if (isLoadingReviews) {
       return (

@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getLocations, addReview } from "../services/locationService";
+import axios from "axios"; // Import axios to make HTTP requests
 import { Location } from "../types";
 import Header from "../components/Header";
 import { ArrowLeft } from "lucide-react";
@@ -31,11 +30,13 @@ const SubmitReview = () => {
     const fetchLocations = async () => {
       try {
         setIsLoading(true);
-        const data = await getLocations();
+        const response = await fetch("/mocklocations.json"); // Fetch local JSON file
+        if (!response.ok) throw new Error("Failed to fetch mock locations");
+        const data = await response.json();
         setLocations(data);
         setError(null);
       } catch (err) {
-        console.error("Error fetching locations:", err);
+        console.error("Error fetching mock locations:", err);
         setError("Failed to load locations. Please try again later.");
       } finally {
         setIsLoading(false);
@@ -45,6 +46,7 @@ const SubmitReview = () => {
     fetchLocations();
   }, []);
 
+  // Validate the form data
   const validateForm = () => {
     const errors: Record<string, string> = {};
     
@@ -59,8 +61,10 @@ const SubmitReview = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // console.log(value);
   };
 
+  // Directly submit review to the backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -69,8 +73,8 @@ const SubmitReview = () => {
     setIsSubmitting(true);
     
     try {
-      // Submit the review
-      await addReview({
+      // Directly send the review data to the backend (POST request)
+      const response = await axios.post("http://localhost:3421/api/reviews/reviewform", {
         location: formData.location,
         name: formData.name,
         noiseLevel: Number(formData.noiseLevel),
@@ -78,12 +82,15 @@ const SubmitReview = () => {
         textReview: formData.textReview,
         weather: formData.weather,
         datetime: new Date().toISOString(),
+        
       });
       
-      // Navigate to the location details page
-      navigate(`/location/${formData.location}`);
+      if (response.status === 201) {
+        // Review successfully submitted, navigate to location details page
+        navigate(`/location/${formData.location}`);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error submitting review:", error);
       setError("Failed to submit review. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -129,7 +136,7 @@ const SubmitReview = () => {
                   >
                     <option value="">Select a location</option>
                     {locations.map((location) => (
-                      <option key={location._id} value={location._id}>
+                      <option key={location?.name} value={location?.name}>
                         {location.name || location.address}
                       </option>
                     ))}
@@ -249,3 +256,4 @@ const SubmitReview = () => {
 };
 
 export default SubmitReview;
+
