@@ -6,14 +6,13 @@ import LocationCard from "../components/LocationCard";
 import { Skeleton } from "../components/ui/skeleton";
 import { MapPin, Info } from "lucide-react";
 
-// Helper function to fetch locations from the backend
+// Helper function to fetch locations from mock data
 const fetchLocations = async (): Promise<Location[]> => {
-  const response = await fetch("http://localhost:5000/locations"); // Update with your actual backend URL
+  const response = await fetch("/mocklocations.json"); // Load from local JSON file
   if (!response.ok) {
     throw new Error("Failed to fetch locations");
   }
-  const data = await response.json();
-  return data;
+  return response.json();
 };
 
 const Index = () => {
@@ -72,7 +71,7 @@ const Index = () => {
               </div>
             </div>
           ) : (
-            <MapView locations={locations} />
+            <MapView/>
           )}
 
           <div className="mt-10">
