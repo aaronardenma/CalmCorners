@@ -26,16 +26,17 @@ const SubmitReview = () => {
 
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
-  // Fetch locations directly from your backend
   useEffect(() => {
     const fetchLocations = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get("http://localhost:5174/locations"); // Replace with your backend URL
-        setLocations(response.data);
+        const response = await fetch("/mocklocations.json"); // Fetch local JSON file
+        if (!response.ok) throw new Error("Failed to fetch mock locations");
+        const data = await response.json();
+        setLocations(data);
         setError(null);
       } catch (err) {
-        console.error("Error fetching locations:", err);
+        console.error("Error fetching mock locations:", err);
         setError("Failed to load locations. Please try again later.");
       } finally {
         setIsLoading(false);
@@ -60,6 +61,7 @@ const SubmitReview = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // console.log(value);
   };
 
   // Directly submit review to the backend
@@ -72,7 +74,7 @@ const SubmitReview = () => {
     
     try {
       // Directly send the review data to the backend (POST request)
-      const response = await axios.post("http://localhost:5174/reviewform", {
+      const response = await axios.post("http://localhost:3421/api/reviews/reviewform", {
         location: formData.location,
         name: formData.name,
         noiseLevel: Number(formData.noiseLevel),
@@ -80,6 +82,7 @@ const SubmitReview = () => {
         textReview: formData.textReview,
         weather: formData.weather,
         datetime: new Date().toISOString(),
+        
       });
       
       if (response.status === 201) {
@@ -133,7 +136,7 @@ const SubmitReview = () => {
                   >
                     <option value="">Select a location</option>
                     {locations.map((location) => (
-                      <option key={location._id} value={location._id}>
+                      <option key={location?.name} value={location?.name}>
                         {location.name || location.address}
                       </option>
                     ))}
