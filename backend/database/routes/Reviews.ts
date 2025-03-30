@@ -1,10 +1,11 @@
 import express from "express";
 import Review from "../models/ReviewSchema"; 
 import { body, validationResult } from "express-validator";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-// Save a new review
+// Save (POST) a new review
 router.post("/", 
     [
         body('name').notEmpty().withMessage('Name is required'),
@@ -43,7 +44,7 @@ router.post("/",
     }
 });
 
-// Get all reviews (GET /api/reviews)
+// GET all reviews (GET /api/reviews)
 router.get("/", async (req, res) => {
     try {
         const reviews = await Review.find(); 
@@ -51,6 +52,30 @@ router.get("/", async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to fetch reviews" });
+    }
+});
+
+// Update (PATCH) a review (PATCH /api/reviews/:id)
+router.patch("/:id", async (req, res) => {
+    const { id } = req.params;  // Get the review ID from the URL
+    const { name, textReview, noiseLevel, busyLevel, location, weather, datetime } = req.body;
+
+    try {
+        // Find the review by ID and update it with the new data
+        const updatedReview = await Review.findByIdAndUpdate(
+            id, 
+            { name, textReview, noiseLevel, busyLevel, location, weather, datetime },
+            { new: true }  // The "new" option returns the updated review instead of the original
+        );
+
+        if (!updatedReview) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+
+        res.status(200).json({ message: "Review updated successfully", review: updatedReview });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to update review" });
     }
 });
 
