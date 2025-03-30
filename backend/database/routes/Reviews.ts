@@ -79,4 +79,28 @@ router.patch("/:id", async (req, res) => {
     }
 });
 
+// DELETE a review by ID (DELETE /api/reviews/:id)
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;  // Get the review ID from the URL params
+
+    // Validate the ID format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid review ID format" });
+    }
+
+    try {
+        // Attempt to find and delete the review by ID
+        const deletedReview = await Review.findByIdAndDelete(id);
+
+        if (!deletedReview) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+
+        res.status(200).json({ message: "Review deleted successfully", review: deletedReview });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to delete review" });
+    }
+});
+
 export default router;
