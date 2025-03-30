@@ -1,25 +1,17 @@
-
 import { Button } from "../components/ui/button";
 import { Link } from "react-router-dom";
 import { MapPin, MessageSquare } from "lucide-react";
 import { useState, useEffect } from "react";
-import NicknameModal from "./NicknameModal";
-import { getCurrentUser } from "../services/userService";
 import { User } from "../types";
 
 const Header = () => {
-  const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const currentUser = getCurrentUser();
+    // Simulate fetching the current user from a global state, localStorage, or other methods
+    const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
     setUser(currentUser);
   }, []);
-
-  const handleNicknameSet = (user: User) => {
-    setUser(user);
-    setIsNicknameModalOpen(false);
-  };
 
   return (
     <header className="border-b bg-white py-3 sticky top-0 z-10">
@@ -63,10 +55,9 @@ const Header = () => {
           ) : (
             <Button 
               variant="outline" 
-              onClick={() => setIsNicknameModalOpen(true)}
               className="border-quiet-400 text-quiet-600 hover:bg-quiet-100"
             >
-              Set Nickname
+              Log In
             </Button>
           )}
           
@@ -78,12 +69,6 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      
-      <NicknameModal 
-        isOpen={isNicknameModalOpen} 
-        onClose={() => setIsNicknameModalOpen(false)}
-        onNicknameSet={handleNicknameSet}
-      />
     </header>
   );
 };

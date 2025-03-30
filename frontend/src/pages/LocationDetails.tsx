@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getLocationById, getReviewsForLocation } from "../services/locationService";
 import { Location, Review } from "../types";
 import Header from "../components/Header";
 import QuietnessMeter from "../components/QuietnessMeter";
@@ -18,9 +17,16 @@ const LocationDetails = () => {
 
   useEffect(() => {
     const fetchLocation = async () => {
+      if (!id) {
+        setLocationError("Location ID is missing.");
+        return;
+      }
+      
       try {
         setIsLoadingLocation(true);
-        const fetchedLocation = await getLocationById(id!);
+        const response = await fetch(`/api/locations/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch location");
+        const fetchedLocation = await response.json();
         setLocation(fetchedLocation);
         setLocationError(null);
       } catch (err) {
@@ -32,9 +38,16 @@ const LocationDetails = () => {
     };
 
     const fetchReviews = async () => {
+      if (!id) {
+        setReviewsError("Location ID is missing.");
+        return;
+      }
+
       try {
         setIsLoadingReviews(true);
-        const fetchedReviews = await getReviewsForLocation(id!);
+        const response = await fetch(`/api/reviews?locationId=${id}`);
+        if (!response.ok) throw new Error("Failed to fetch reviews");
+        const fetchedReviews = await response.json();
         setReviews(fetchedReviews);
         setReviewsError(null);
       } catch (err) {
@@ -120,7 +133,6 @@ const LocationDetails = () => {
     );
   };
 
-  // Update the review rendering section to match our schema
   const renderReviews = () => {
     if (isLoadingReviews) {
       return (

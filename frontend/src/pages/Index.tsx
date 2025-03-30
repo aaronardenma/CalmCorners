@@ -1,6 +1,4 @@
-
 import { useState, useEffect } from "react";
-import { getLocations } from "../services/locationService";
 import { Location } from "../types";
 import MapView from "../components/Map";
 import Header from "../components/Header";
@@ -8,16 +6,26 @@ import LocationCard from "../components/LocationCard";
 import { Skeleton } from "../components/ui/skeleton";
 import { MapPin, Info } from "lucide-react";
 
+// Helper function to fetch locations from the backend
+const fetchLocations = async (): Promise<Location[]> => {
+  const response = await fetch("http://localhost:5000/locations"); // Update with your actual backend URL
+  if (!response.ok) {
+    throw new Error("Failed to fetch locations");
+  }
+  const data = await response.json();
+  return data;
+};
+
 const Index = () => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchLocations = async () => {
+    const loadLocations = async () => {
       try {
         setIsLoading(true);
-        const data = await getLocations();
+        const data = await fetchLocations();
         setLocations(data);
         setError(null);
       } catch (err) {
@@ -28,13 +36,13 @@ const Index = () => {
       }
     };
 
-    fetchLocations();
+    loadLocations();
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
-      
+
       <main className="flex-1">
         <div className="container mx-auto px-4 py-6">
           <div className="mb-6">
@@ -43,7 +51,7 @@ const Index = () => {
               Discover peaceful spots to study, relax, or focus on campus.
             </p>
           </div>
-          
+
           {isLoading ? (
             <div className="map-container">
               <Skeleton className="w-full h-full" />
@@ -66,13 +74,13 @@ const Index = () => {
           ) : (
             <MapView locations={locations} />
           )}
-          
+
           <div className="mt-10">
             <div className="flex items-center gap-2 mb-6">
               <MapPin className="h-5 w-5 text-quiet-500" />
               <h2 className="text-2xl font-semibold">Featured Quiet Spaces</h2>
             </div>
-            
+
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
@@ -96,7 +104,7 @@ const Index = () => {
           </div>
         </div>
       </main>
-      
+
       <footer className="bg-white border-t py-6">
         <div className="container mx-auto px-4 text-center text-sm text-gray-500">
           <p>© {new Date().getFullYear()} UBC Quiet Spaces Finder</p>

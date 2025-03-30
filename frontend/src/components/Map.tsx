@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, memo } from 'react';
 import LocationMarker from './LocationMarker';
 import { toast } from 'sonner';
 import MapFilterBar, { FilterOptions } from './MapFilterBar';
+import { Location } from "../types";
 
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
