@@ -31,7 +31,7 @@ const LocationDetails = () => {
         setLocationError(null);
       } catch (err) {
         console.error("Error fetching location:", err);
-        setLocationError("Failed to load location. Please try again later.");
+        setLocationError("LocationDetails: Failed to load location. Please try again later.");
       } finally {
         setIsLoadingLocation(false);
       }
@@ -146,7 +146,7 @@ const LocationDetails = () => {
     if (reviewsError) {
       return (
         <div className="text-center py-8">
-          <p className="text-gray-500">Failed to load reviews.</p>
+          <p className="text-gray-500">LocationDetails: Failed to load reviews.</p>
         </div>
       );
     }
